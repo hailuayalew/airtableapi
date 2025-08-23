@@ -8,6 +8,8 @@ function App() {
   const [date, setDate] = useState("");
   const [transferto, setTransferto] = useState("");
   const [trxid, setTrxid] = useState("");
+  const [type, setType] = useState("");
+  const [donevia, setDonevia] = useState("");
   const [editId, setEditId] = useState(null);
 
   // Fetch all transactions
@@ -25,7 +27,7 @@ function App() {
 
   // Create or update transaction
   const saveTransaction = async () => {
-    if (!amount || !balance || !date || !transferto || !trxid) {
+    if (!amount || !balance || !date || !transferto || !trxid || !type || !donevia) {
       alert("Please fill in all fields");
       return;
     }
@@ -37,6 +39,8 @@ function App() {
         date: date,
         transferto: transferto,
         trxid: trxid,
+        type: type,
+        donevia: donevia,
       },
     };
 
@@ -77,6 +81,8 @@ function App() {
     setDate("");
     setTransferto("");
     setTrxid("");
+    setType("");
+    setDonevia("");
     setEditId(null);
   };
 
@@ -88,7 +94,7 @@ function App() {
     <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h1>💰 Bank Transactions</h1>
 
-      <div style={{ marginBottom: "20px", display: "flex", gap: "10px" }}>
+      <div style={{ marginBottom: "20px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
         <input
           type="number"
           placeholder="Amount"
@@ -118,6 +124,18 @@ function App() {
           value={trxid}
           onChange={(e) => setTrxid(e.target.value)}
         />
+        <input
+          type="text"
+          placeholder="Type"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Done Via"
+          value={donevia}
+          onChange={(e) => setDonevia(e.target.value)}
+        />
         <button onClick={saveTransaction}>{editId ? "Update" : "Add"}</button>
         {editId && <button onClick={resetForm}>Cancel</button>}
       </div>
@@ -134,13 +152,15 @@ function App() {
             <th>Date</th>
             <th>Transfer To</th>
             <th>Transaction ID</th>
+            <th>Type</th>
+            <th>Done Via</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {transactions.length === 0 && (
             <tr>
-              <td colSpan="6" style={{ textAlign: "center" }}>
+              <td colSpan="8" style={{ textAlign: "center" }}>
                 No transactions found
               </td>
             </tr>
@@ -152,6 +172,8 @@ function App() {
               <td>{tx.fields.date}</td>
               <td>{tx.fields.transferto}</td>
               <td>{tx.fields.trxid}</td>
+              <td>{tx.fields.type}</td>
+              <td>{tx.fields.donevia}</td>
               <td>
                 <button
                   onClick={() => {
@@ -161,6 +183,8 @@ function App() {
                     setDate(tx.fields.date);
                     setTransferto(tx.fields.transferto || "");
                     setTrxid(tx.fields.trxid || "");
+                    setType(tx.fields.type || "");
+                    setDonevia(tx.fields.donevia || "");
                   }}
                 >
                   Edit
