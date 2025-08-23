@@ -6,6 +6,8 @@ function App() {
   const [amount, setAmount] = useState("");
   const [balance, setBalance] = useState("");
   const [date, setDate] = useState("");
+  const [transferto, setTransferto] = useState("");
+  const [trxid, setTrxid] = useState("");
   const [editId, setEditId] = useState(null);
 
   // Fetch all transactions
@@ -23,7 +25,7 @@ function App() {
 
   // Create or update transaction
   const saveTransaction = async () => {
-    if (!amount || !balance || !date) {
+    if (!amount || !balance || !date || !transferto || !trxid) {
       alert("Please fill in all fields");
       return;
     }
@@ -33,6 +35,8 @@ function App() {
         amount: parseFloat(amount),
         balance: parseFloat(balance),
         date: date,
+        transferto: transferto,
+        trxid: trxid,
       },
     };
 
@@ -71,6 +75,8 @@ function App() {
     setAmount("");
     setBalance("");
     setDate("");
+    setTransferto("");
+    setTrxid("");
     setEditId(null);
   };
 
@@ -100,6 +106,18 @@ function App() {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
+        <input
+          type="text"
+          placeholder="Transfer To"
+          value={transferto}
+          onChange={(e) => setTransferto(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="Transaction ID"
+          value={trxid}
+          onChange={(e) => setTrxid(e.target.value)}
+        />
         <button onClick={saveTransaction}>{editId ? "Update" : "Add"}</button>
         {editId && <button onClick={resetForm}>Cancel</button>}
       </div>
@@ -114,13 +132,15 @@ function App() {
             <th>Amount</th>
             <th>Balance</th>
             <th>Date</th>
+            <th>Transfer To</th>
+            <th>Transaction ID</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {transactions.length === 0 && (
             <tr>
-              <td colSpan="4" style={{ textAlign: "center" }}>
+              <td colSpan="6" style={{ textAlign: "center" }}>
                 No transactions found
               </td>
             </tr>
@@ -130,6 +150,8 @@ function App() {
               <td>{tx.fields.amount}</td>
               <td>{tx.fields.balance}</td>
               <td>{tx.fields.date}</td>
+              <td>{tx.fields.transferto}</td>
+              <td>{tx.fields.trxid}</td>
               <td>
                 <button
                   onClick={() => {
@@ -137,6 +159,8 @@ function App() {
                     setAmount(tx.fields.amount);
                     setBalance(tx.fields.balance);
                     setDate(tx.fields.date);
+                    setTransferto(tx.fields.transferto || "");
+                    setTrxid(tx.fields.trxid || "");
                   }}
                 >
                   Edit
