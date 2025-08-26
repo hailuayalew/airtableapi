@@ -96,13 +96,13 @@ function App() {
 
       <div style={{ marginBottom: "20px", display: "flex", gap: "10px", flexWrap: "wrap" }}>
         <input
-          type="number"
+          type="text"
           placeholder="Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
         <input
-          type="number"
+          type="text"
           placeholder="Balance"
           value={balance}
           onChange={(e) => setBalance(e.target.value)}
