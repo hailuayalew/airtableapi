@@ -34,8 +34,8 @@ function App() {
 
     const data = {
       fields: {
-        amount: parseFloat(amount),
-        balance: parseFloat(balance),
+        amount: amount,
+        balance: balance,
         date: date,
         transferto: transferto,
         trxid: trxid,
